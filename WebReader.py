@@ -1,64 +1,55 @@
 from bs4 import BeautifulSoup
-import urllib3
 import traceback
-import datetime
+import requests
 import logging
 
 
 class UrlOpener:
     def __init__(self):
         self.logging_def()
-        self.address = input("What is the url address?")
-        page = " "
-        http = urllib3.PoolManager()
-        try:
-            response = http.request('GET', self.address, headers={}, timeout=4.0, retries=10)
-            status = response.status
-            print(status)
-            page = response.data
-
-        except TypeError:
-            error = traceback.format_exc(limit=1)
-            logging.debug(self.address + " produced a type error " + error)
-            print(error)
-
-        except urllib3.exceptions.NewConnectionError:
-            error = traceback.format_exc(limit=1)
-            logging.debug(self.address + " produced a type error " + error)
-            print(error)
-            print(self.address + " not found.  Please check address")
-
-        except urllib3.exceptions.DecodeError:
-            error = traceback.format_exc(limit=1)
-            logging.debug(self.address + " produced a type error " + error)
-            print(error)
-
+        website = input("What is the url address?")
+        page = self.open_address(website)
+        logging.info("Website data retrieved.")
         html = self.parse_page(page)
+        logging.info("website html parsed")
         print(html)
+
+    def open_address(self, address):
+        """
+        Requests opens page and retrieves data
+        :param address: the web address
+        :return: page - the response data
+        """
+        page = " "
+        try:
+            data = requests.get(address)
+            page = data.text
+
+        except requests:
+            error = traceback.format_exc(limit=1)
+            logging.debug(address + " produced an error " + error)
+            print(error)
+
+        return page
 
     def logging_def(self):
         """
-        Starts logging errors and info
+        Starts event logging module.  The file Event_Log.log is opened, if it doesn't exist it will be created.
+        Events will be logged by date then time followed by whatever event is given.
         :return:
         """
-        logging.basicConfig(filename='Error_Log.log', level=logging.DEBUG,
+        logging.basicConfig(filename='Event_Log.log', level=logging.DEBUG,
                             format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
-    def log_error(self, error):
-        """
-        Logs errors in error_log.txt and prints to screen
-        :param: error
-        :return: None
-        """
-        now = datetime.datetime.now()
-        log_file = open("error_log.txt", "a+")
-        log_file.write(now.strftime("%m/%d/%Y %H:%M") + "  -  " + error)
-        log_file.close()
-        return None
 
     def parse_page(self, content):
-        soup = BeautifulSoup(content, 'html.parser')
-        return soup
+        """
+        Translate urllib material into raw html.
+        :param content:
+        :return: html - the page's mark up
+        """
+        html = BeautifulSoup(content, 'html.parser')
+        return html
 
 
 UrlOpener()
