@@ -45,7 +45,7 @@ class UrlOpener:
 
     def parse_page(self, content):
         """
-        Translate urllib material into raw html.
+        Translate request data into raw html.
         :param content:
         :return: html - the page's mark up
         """
@@ -62,9 +62,10 @@ class UrlOpener:
         for text in p_tags:
             text_to_read += text.text.strip()
         tts = gTTS(text=text_to_read, lang='en')
+        file_name = input("What would you like to name your mp3 file? ")
         print("Please wait for completion of mp3 save. Times vary based on document size.")
-        tts.save("webpage.mp3")
-        print("Sound file saved as webpage.mp3.")
+        tts.save(file_name + ".mp3")
+        print("Sound file saved as "+file_name+".mp3.")
 
 UrlOpener()
 
