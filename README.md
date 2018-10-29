@@ -8,3 +8,8 @@ This program can read multiple languages.  I have tested it in English, Spanish,
 * Requests (pip install requests)
 * BeautifulSoup (pip install BeautifulSoup4)
 * GTTS (pip install gTTS)
+
+## Packaging
+Pyinstaller was used to make an executable of this file.  The icon.ico has the multilayers needed for pyinstaller to make an icon that expands if the user chooses to have their icons a differ size.
+The command used to package this was: pyinstaller -F --icon="icon.ico" WebReader.py
+-F means one file
