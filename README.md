@@ -4,6 +4,8 @@ WebReader will convert a web page to a mp3 file. This program features Python 3'
 
 This program can read multiple languages.  I have tested it in English, Spanish, and Korean.
 
+The executable is available in the dist folder.
+
 ## Required modules
 * Requests (pip install requests)
 * BeautifulSoup (pip install BeautifulSoup4)
