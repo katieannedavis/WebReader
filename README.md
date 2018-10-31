@@ -6,7 +6,7 @@ This program can read multiple languages.  I have tested it in English, Spanish,
 
 The executable is available in the dist folder.
 
-## Required modules
+## Required modules for development (Executable is independent of modules)
 * Requests (pip install requests)
 * BeautifulSoup (pip install BeautifulSoup4)
 * GTTS (pip install gTTS)
